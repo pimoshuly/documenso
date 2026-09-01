@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # 🚀 Starting the configured instance...
 INSTANCE_DISPLAY_NAME=${NEXT_PUBLIC_INSTANCE_NAME:-Document Signing}
 printf "🚀 Starting %s...\n\n" "$INSTANCE_DISPLAY_NAME"
@@ -31,7 +33,7 @@ printf "📊 Certificate status: http://localhost:3000/api/certificate-status\n"
 printf "👥 Community: https://github.com/documenso/documenso\n\n"
 
 printf "🗄️  Running database migrations...\n"
-npx prisma migrate deploy --schema ../../packages/prisma/schema.prisma
+../../node_modules/.bin/prisma migrate deploy --schema ../../packages/prisma/schema.prisma
 
 printf "🌟 Starting %s server...\n" "$INSTANCE_DISPLAY_NAME"
 HOSTNAME=0.0.0.0 node build/server/main.js
