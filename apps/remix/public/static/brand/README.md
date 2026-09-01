@@ -1,7 +1,7 @@
 # Instance brand assets
 
 Place deployment-specific public brand assets in this directory, or host them at an external
-`https://` URL. No customer logo is included in the repository.
+`https://` URL. `avellino-logo.webp` is the logo used by the Avellino Tests deployment.
 
 `default-icon.svg` is a neutral document glyph used only when no instance icon is configured.
 
