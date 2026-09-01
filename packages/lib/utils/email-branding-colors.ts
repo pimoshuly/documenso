@@ -1,5 +1,6 @@
 import { colord } from 'colord';
 
+import { getInstanceBranding, type InstanceBrandingConfig } from '../constants/instance-branding';
 import { DEFAULT_BRAND_COLORS } from '../constants/theme';
 import type { TCssVarsSchema } from '../types/css-vars';
 
@@ -37,10 +38,10 @@ export type EmailBrandingColorKey = (typeof EMAIL_BRANDING_COLOR_KEYS)[number];
  *
  * Derived from `TCssVarsSchema` (the persisted shape) by narrowing to the
  * email token subset and making every field required: the resolver fills every
- * token (tenant value or Documenso default), so consumers never see `undefined`.
+ * token from the supplied fallback palette, so consumers never see `undefined`.
  *
  * Produced by `resolveEmailBrandingColors`, or `null` when the tenant has no
- * usable/safe colour set (callers fall back to the default Documenso palette).
+ * usable/safe colour set.
  */
 export type EmailBrandingColors = Required<Pick<TCssVarsSchema, EmailBrandingColorKey>>;
 
@@ -69,15 +70,16 @@ export const normalizeColorToHex = (value: string | null | undefined): string | 
  * Resolve a tenant's stored `brandingColors` into an email-ready colour set.
  *
  * Each token is taken from the tenant value when it parses to a valid colour,
- * otherwise the Documenso default. We do NOT enforce contrast or readability —
+ * otherwise the supplied fallback. We do NOT enforce contrast or readability —
  * if a tenant picks a low-contrast combination that is their choice; the
  * preview UI can hint at it, but the renderer just applies what was set.
  *
- * Returns `null` (⇒ caller uses the default Documenso palette) only when there
+ * Returns `null` only when there
  * is no `brandingColors` object at all.
  */
 export const resolveEmailBrandingColors = (
   brandingColors: TCssVarsSchema | null | undefined,
+  fallbackColors: EmailBrandingColors = DEFAULT_BRAND_COLORS,
 ): EmailBrandingColors | null => {
   if (!brandingColors) {
     return null;
@@ -87,19 +89,30 @@ export const resolveEmailBrandingColors = (
     normalizeColorToHex(value) ?? fallback;
 
   return {
-    background: resolve(brandingColors.background, DEFAULT_BRAND_COLORS.background),
-    foreground: resolve(brandingColors.foreground, DEFAULT_BRAND_COLORS.foreground),
-    muted: resolve(brandingColors.muted, DEFAULT_BRAND_COLORS.muted),
-    mutedForeground: resolve(brandingColors.mutedForeground, DEFAULT_BRAND_COLORS.mutedForeground),
-    primary: resolve(brandingColors.primary, DEFAULT_BRAND_COLORS.primary),
-    primaryForeground: resolve(brandingColors.primaryForeground, DEFAULT_BRAND_COLORS.primaryForeground),
-    secondary: resolve(brandingColors.secondary, DEFAULT_BRAND_COLORS.secondary),
-    secondaryForeground: resolve(brandingColors.secondaryForeground, DEFAULT_BRAND_COLORS.secondaryForeground),
-    accent: resolve(brandingColors.accent, DEFAULT_BRAND_COLORS.accent),
-    accentForeground: resolve(brandingColors.accentForeground, DEFAULT_BRAND_COLORS.accentForeground),
-    destructive: resolve(brandingColors.destructive, DEFAULT_BRAND_COLORS.destructive),
-    destructiveForeground: resolve(brandingColors.destructiveForeground, DEFAULT_BRAND_COLORS.destructiveForeground),
-    warning: resolve(brandingColors.warning, DEFAULT_BRAND_COLORS.warning),
-    border: resolve(brandingColors.border, DEFAULT_BRAND_COLORS.border),
+    background: resolve(brandingColors.background, fallbackColors.background),
+    foreground: resolve(brandingColors.foreground, fallbackColors.foreground),
+    muted: resolve(brandingColors.muted, fallbackColors.muted),
+    mutedForeground: resolve(brandingColors.mutedForeground, fallbackColors.mutedForeground),
+    primary: resolve(brandingColors.primary, fallbackColors.primary),
+    primaryForeground: resolve(brandingColors.primaryForeground, fallbackColors.primaryForeground),
+    secondary: resolve(brandingColors.secondary, fallbackColors.secondary),
+    secondaryForeground: resolve(brandingColors.secondaryForeground, fallbackColors.secondaryForeground),
+    accent: resolve(brandingColors.accent, fallbackColors.accent),
+    accentForeground: resolve(brandingColors.accentForeground, fallbackColors.accentForeground),
+    destructive: resolve(brandingColors.destructive, fallbackColors.destructive),
+    destructiveForeground: resolve(brandingColors.destructiveForeground, fallbackColors.destructiveForeground),
+    warning: resolve(brandingColors.warning, fallbackColors.warning),
+    border: resolve(brandingColors.border, fallbackColors.border),
   };
+};
+
+export const getInstanceEmailBrandingColors = (
+  branding: InstanceBrandingConfig = getInstanceBranding(),
+): EmailBrandingColors => {
+  return (
+    resolveEmailBrandingColors({
+      primary: branding.primaryColor,
+      primaryForeground: branding.primaryForegroundColor,
+    }) ?? DEFAULT_BRAND_COLORS
+  );
 };

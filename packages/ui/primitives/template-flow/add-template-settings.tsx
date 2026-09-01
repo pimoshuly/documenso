@@ -3,6 +3,7 @@ import { useCurrentOrganisation } from '@documenso/lib/client-only/providers/org
 import { DATE_FORMATS, DEFAULT_DOCUMENT_DATE_FORMAT } from '@documenso/lib/constants/date-formats';
 import { DOCUMENT_DISTRIBUTION_METHODS, DOCUMENT_SIGNATURE_TYPES } from '@documenso/lib/constants/document';
 import { SUPPORTED_LANGUAGES } from '@documenso/lib/constants/i18n';
+import { getInstanceBranding } from '@documenso/lib/constants/instance-branding';
 import { DEFAULT_DOCUMENT_TIME_ZONE, TIME_ZONES } from '@documenso/lib/constants/time-zones';
 import { ZDocumentEmailSettingsSchema } from '@documenso/lib/types/document-email';
 import type { TDocumentMetaDateFormat } from '@documenso/lib/types/document-meta';
@@ -84,6 +85,7 @@ export const AddTemplateSettingsFormPartial = ({
   onAutoSave,
 }: AddTemplateSettingsFormProps) => {
   const { t } = useLingui();
+  const instanceBranding = getInstanceBranding();
 
   const organisation = useCurrentOrganisation();
 
@@ -487,7 +489,7 @@ export const AddTemplateSettingsFormPartial = ({
                                       </SelectItem>
                                     ))}
 
-                                    <SelectItem value={'-1'}>Documenso</SelectItem>
+                                    <SelectItem value={'-1'}>{instanceBranding.name}</SelectItem>
                                   </SelectContent>
                                 </Select>
                               </FormControl>

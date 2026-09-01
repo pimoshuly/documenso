@@ -43,6 +43,44 @@ services:
           envVarKey: RENDER_EXTERNAL_URL
       - key: NEXT_PRIVATE_INTERNAL_WEBAPP_URL
         value: 'http://localhost:10000'
+      - key: NEXT_PUBLIC_INSTANCE_NAME
+        value: 'Document Signing'
+      - key: NEXT_PUBLIC_INSTANCE_SHORT_NAME
+        sync: false
+      - key: NEXT_PUBLIC_INSTANCE_DESCRIPTION
+        sync: false
+      - key: NEXT_PUBLIC_INSTANCE_WEBSITE_URL
+        sync: false
+      - key: NEXT_PUBLIC_INSTANCE_LOGO_URL
+        sync: false
+      - key: NEXT_PUBLIC_INSTANCE_ICON_URL
+        sync: false
+      - key: NEXT_PUBLIC_INSTANCE_OPENGRAPH_IMAGE_URL
+        sync: false
+      - key: NEXT_PUBLIC_INSTANCE_PRIMARY_COLOR
+        sync: false
+      - key: NEXT_PUBLIC_INSTANCE_PRIMARY_FOREGROUND_COLOR
+        sync: false
+      - key: NEXT_PUBLIC_INSTANCE_LEGAL_NAME
+        sync: false
+      - key: NEXT_PUBLIC_INSTANCE_LEGAL_ADDRESS
+        sync: false
+      - key: NEXT_PUBLIC_SUPPORT_EMAIL
+        sync: false
+      - key: NEXT_PUBLIC_INSTANCE_EMAIL_FOOTER_TEXT
+        sync: false
+      - key: NEXT_PUBLIC_SOURCE_CODE_URL
+        sync: false
+      - key: NEXT_PUBLIC_INSTANCE_DOCUMENTATION_URL
+        sync: false
+      - key: NEXT_PUBLIC_INSTANCE_SUPPORT_URL
+        sync: false
+      - key: NEXT_PUBLIC_INSTANCE_TERMS_URL
+        sync: false
+      - key: NEXT_PUBLIC_INSTANCE_PRIVACY_URL
+        sync: false
+      - key: NEXT_PUBLIC_INSTANCE_PLANS_URL
+        sync: false
 
       # SMTP
       - key: NEXT_PRIVATE_SMTP_TRANSPORT

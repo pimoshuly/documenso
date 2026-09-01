@@ -10,7 +10,7 @@ import { TemplateFooter } from '../template-components/template-footer';
 export type DocumentSelfSignedTemplateProps = TemplateDocumentSelfSignedProps;
 
 export const DocumentSelfSignedEmailTemplate = ({
-  documentName = 'Open Source Pledge.pdf',
+  documentName = 'Example Agreement.pdf',
   assetBaseUrl = 'http://localhost:3002',
 }: DocumentSelfSignedTemplateProps) => {
   const { _ } = useLingui();

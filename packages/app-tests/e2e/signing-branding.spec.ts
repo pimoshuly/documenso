@@ -103,7 +103,7 @@ test('[SIGNING_BRANDING]: V2 signing renders custom logo as a plain image', asyn
   await expectPlainBrandingLogo(page, `${team.name}'s Logo`);
 });
 
-test('[SIGNING_BRANDING]: V2 signing keeps internal link for the Documenso fallback logo', async ({ page }) => {
+test('[SIGNING_BRANDING]: V2 signing keeps an internal link for the instance fallback logo', async ({ page }) => {
   const { user, team } = await seedUser();
 
   const { recipients } = await seedPendingDocumentWithFullFields({
@@ -170,7 +170,7 @@ test('[SIGNING_BRANDING]: custom logo renders when branding is enabled and is hi
     data: { brandingEnabled: false },
   });
 
-  // Branding disabled → the custom logo is gone and the Documenso fallback
+  // Branding disabled → the custom logo is gone and the instance fallback
   // (an internal link to "/") is shown instead.
   await page.goto(`/sign/${recipients[0].token}`);
 

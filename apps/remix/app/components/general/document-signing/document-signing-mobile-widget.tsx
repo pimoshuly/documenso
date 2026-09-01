@@ -12,6 +12,7 @@ import { useEmbedSigningContext } from '~/components/embed/embed-signing-context
 import { BrandingLogo } from '../branding-logo';
 import EnvelopeSignerForm from '../envelope-signing/envelope-signer-form';
 import { EnvelopeSignerCompleteDialog } from '../envelope-signing/envelope-signing-complete-dialog';
+import { InstanceLegalLinks } from '../instance-legal-links';
 import { useRequiredEnvelopeSigningContext } from './envelope-signing-provider';
 
 export const DocumentSigningMobileWidget = () => {
@@ -103,6 +104,8 @@ export const DocumentSigningMobileWidget = () => {
               </div>
             </div>
           )}
+
+          <InstanceLegalLinks className="px-4 pb-3" />
 
           {/* Expandable Content */}
           {isExpanded && (

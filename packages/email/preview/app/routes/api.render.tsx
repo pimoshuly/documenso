@@ -1,4 +1,4 @@
-import { resolveEmailBrandingColors } from '@documenso/lib/utils/email-branding-colors';
+import { getInstanceEmailBrandingColors, resolveEmailBrandingColors } from '@documenso/lib/utils/email-branding-colors';
 import { renderEmailWithI18N } from '@documenso/lib/utils/render-email-with-i18n';
 
 import { getTemplate } from '../lib/templates';
@@ -32,7 +32,9 @@ export const action = async ({ request }: Route.ActionArgs) => {
   // Resolve brand colours through the same resolver production uses, so the
   // preview applies the same per-token fallbacks as a live send.
   const brandingColors =
-    body.colors && Object.keys(body.colors).length > 0 ? resolveEmailBrandingColors(body.colors) : null;
+    body.colors && Object.keys(body.colors).length > 0
+      ? resolveEmailBrandingColors(body.colors, getInstanceEmailBrandingColors())
+      : null;
 
   const Component = template.component;
   const element = <Component {...body.props} assetBaseUrl={body.assetBaseUrl} />;

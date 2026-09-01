@@ -1,5 +1,5 @@
 import { useCurrentOrganisation } from '@documenso/lib/client-only/providers/organisation';
-import { DOCUMENSO_CLOUD_ENTERPRISE_CTA_URL } from '@documenso/lib/constants/app';
+import { getInstanceBranding, resolveInstanceBrandingUrl } from '@documenso/lib/constants/instance-branding';
 import { formatAvatarUrl } from '@documenso/lib/utils/avatars';
 import { cn } from '@documenso/ui/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@documenso/ui/primitives/avatar';
@@ -23,7 +23,7 @@ const BRANDED_SENDERS = [
 ];
 
 /**
- * How long the initial unbranded (Documenso default) state is shown before
+ * How long the initial instance-default state is shown before
  * the first flip starts. Shown exactly once — the cycle never returns to it.
  */
 const INITIAL_STATE_DURATION_MS = 2500;
@@ -43,10 +43,12 @@ const EMAIL_CYCLE_DURATIONS_MS = [INITIAL_STATE_DURATION_MS, ...BRANDED_SENDERS.
 
 export const EmailDomainsUpsell = () => {
   const organisation = useCurrentOrganisation();
+  const instanceBranding = getInstanceBranding();
+  const plansUrl = resolveInstanceBrandingUrl(instanceBranding.plansUrl);
 
   const isReducedMotion = useReducedMotion();
 
-  // Loop from index 1: the unbranded Documenso intro plays exactly once,
+  // Loop from index 1: the instance-default intro plays exactly once,
   // then the cycle rotates through the branded senders only.
   const cycleIndex = useTimedCycle(EMAIL_CYCLE_DURATIONS_MS, 1);
 
@@ -68,8 +70,8 @@ export const EmailDomainsUpsell = () => {
         <Trans key="senders">Named senders with defaults per team, template or document</Trans>,
       ]}
       ctaLabel={<Trans>Contact Sales</Trans>}
-      ctaTo={DOCUMENSO_CLOUD_ENTERPRISE_CTA_URL}
-      ctaExternal
+      ctaTo={plansUrl ?? undefined}
+      ctaExternal={Boolean(plansUrl)}
       preview={
         <div className="mx-auto w-full max-w-xs">
           <div className="relative h-8">
@@ -92,7 +94,7 @@ export const EmailDomainsUpsell = () => {
                 )}
 
                 <span className="truncate">
-                  {isBranded ? <Trans>Sending from your domain</Trans> : <Trans>Sending from app.documenso.com</Trans>}
+                  {isBranded ? <Trans>Sending from your domain</Trans> : <Trans>Sending from this instance</Trans>}
                 </span>
               </motion.div>
             </AnimatePresence>
@@ -147,7 +149,7 @@ export const EmailDomainsUpsell = () => {
                       transition={{ duration: 0.28, ease: EASE }}
                       className="flex min-w-0 items-center gap-1.5"
                     >
-                      <span className="min-w-0 truncate">{isBranded ? brandedSender.name : 'Documenso'}</span>
+                      <span className="min-w-0 truncate">{isBranded ? brandedSender.name : instanceBranding.name}</span>
 
                       {/* Inside the keyed row so it exits with the name and pops back in on every cycle step. */}
                       {isBranded && (
@@ -174,7 +176,7 @@ export const EmailDomainsUpsell = () => {
                       transition={{ duration: 0.28, ease: EASE }}
                       className="truncate"
                     >
-                      {isBranded ? brandedSender.email : 'noreply@app.documenso.com'}
+                      {isBranded ? brandedSender.email : (instanceBranding.supportEmail ?? 'noreply@example.com')}
                     </motion.p>
                   </AnimatePresence>
                 </div>

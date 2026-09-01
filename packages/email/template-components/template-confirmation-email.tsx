@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/react/macro';
 
 import { Button, Section, Text } from '../components';
+import { useBranding } from '../providers/branding';
 import { TemplateDocumentImage } from './template-document-image';
 
 export type TemplateConfirmationEmailProps = {
@@ -9,13 +10,15 @@ export type TemplateConfirmationEmailProps = {
 };
 
 export const TemplateConfirmationEmail = ({ confirmationLink, assetBaseUrl }: TemplateConfirmationEmailProps) => {
+  const branding = useBranding();
+
   return (
     <>
       <TemplateDocumentImage className="mt-6" assetBaseUrl={assetBaseUrl} />
 
       <Section className="flex-row items-center justify-center">
         <Text className="mx-auto mb-0 max-w-[80%] text-center font-semibold text-foreground text-lg">
-          <Trans>Welcome to Documenso!</Trans>
+          {branding.instanceBranding.name}
         </Text>
 
         <Text className="my-1 text-center text-base text-muted-foreground">

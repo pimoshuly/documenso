@@ -1,6 +1,6 @@
 import { useCurrentOrganisation } from '@documenso/lib/client-only/providers/organisation';
 import { useSession } from '@documenso/lib/client-only/providers/session';
-import { DOCUMENSO_CLOUD_ENTERPRISE_CTA_URL } from '@documenso/lib/constants/app';
+import { getInstanceBranding, resolveInstanceBrandingUrl } from '@documenso/lib/constants/instance-branding';
 import { Trans } from '@lingui/react/macro';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { FingerprintIcon } from 'lucide-react';
@@ -10,6 +10,8 @@ import { SettingsUpsellCard } from './settings-upsell-card';
 import { useTimedCycle } from './use-timed-cycle';
 
 export const SsoPortalUpsell = () => {
+  const instanceBranding = getInstanceBranding();
+  const plansUrl = resolveInstanceBrandingUrl(instanceBranding.plansUrl);
   const isReducedMotion = useReducedMotion();
   const sceneIndex = useTimedCycle(SSO_SCENE_DURATIONS_MS);
 
@@ -28,8 +30,8 @@ export const SsoPortalUpsell = () => {
         <Trans key="control">Restrict sign-ins by email domain and choose the default role</Trans>,
       ]}
       ctaLabel={<Trans>Contact Sales</Trans>}
-      ctaTo={DOCUMENSO_CLOUD_ENTERPRISE_CTA_URL}
-      ctaExternal
+      ctaTo={plansUrl ?? undefined}
+      ctaExternal={Boolean(plansUrl)}
       preview={
         <div className="mx-auto w-full max-w-xs">
           <div className="relative h-[236px]">

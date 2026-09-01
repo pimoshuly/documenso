@@ -1,3 +1,4 @@
+import { getInstanceBranding } from '@documenso/lib/constants/instance-branding';
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import { resolveEmailTransport } from '@documenso/lib/server-only/email/resolve-email-transport';
 import { prisma } from '@documenso/prisma';
@@ -37,10 +38,12 @@ export const sendTestEmailTransportRoute = adminProcedure
     }
 
     try {
+      const instanceBranding = getInstanceBranding();
+
       await resolved.transporter.sendMail({
         to: input.to,
         from: { name: transport.fromName, address: transport.fromAddress },
-        subject: 'Documenso email transport test',
+        subject: `${instanceBranding.name} email transport test`,
         text: `This is a test email sent through the "${transport.name}" email transport.`,
       });
     } catch (err) {

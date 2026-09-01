@@ -20,9 +20,9 @@ export type DocumentReminderEmailTemplateProps = {
 };
 
 export const DocumentReminderEmailTemplate = ({
-  recipientName = 'John Doe',
-  documentName = 'Open Source Pledge.pdf',
-  signDocumentLink = 'https://documenso.com',
+  recipientName = 'Example Recipient',
+  documentName = 'Example Agreement.pdf',
+  signDocumentLink = 'https://example.com/sign/example',
   assetBaseUrl = 'http://localhost:3002',
   customBody,
   role = RecipientRole.SIGNER,

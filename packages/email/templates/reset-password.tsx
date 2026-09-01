@@ -3,6 +3,7 @@ import { useLingui } from '@lingui/react';
 import { Trans } from '@lingui/react/macro';
 
 import { Body, Container, Head, Hr, Html, Link, Preview, Section, Text } from '../components';
+import { useBranding } from '../providers/branding';
 import { TemplateBrandingLogo } from '../template-components/template-branding-logo';
 import { TemplateFooter } from '../template-components/template-footer';
 import type { TemplateResetPasswordProps } from '../template-components/template-reset-password';
@@ -11,11 +12,12 @@ import { TemplateResetPassword } from '../template-components/template-reset-pas
 export type ResetPasswordTemplateProps = Partial<TemplateResetPasswordProps>;
 
 export const ResetPasswordTemplate = ({
-  userName = 'Lucas Smith',
-  userEmail = 'lucas@documenso.com',
+  userName = 'Example User',
+  userEmail = 'user@example.com',
   assetBaseUrl = 'http://localhost:3002',
 }: ResetPasswordTemplateProps) => {
   const { _ } = useLingui();
+  const branding = useBranding();
 
   const previewText = msg`Password Reset Successful`;
 
@@ -49,15 +51,14 @@ export const ResetPasswordTemplate = ({
               <Text className="mt-2 text-base text-muted-foreground">
                 <Trans>We've changed your password as you asked. You can now sign in with your new password.</Trans>
               </Text>
-              <Text className="mt-2 text-base text-muted-foreground">
-                <Trans>
-                  Didn't request a password change? We are here to help you secure your account, just{' '}
-                  <Link className="font-normal text-primary" href="mailto:hi@documenso.com">
-                    contact us
+              {branding.instanceBranding.supportEmail && (
+                <Text className="mt-2 text-base text-muted-foreground">
+                  <Trans>Didn't request a password change? Contact support to secure your account:</Trans>{' '}
+                  <Link className="font-normal text-primary" href={`mailto:${branding.instanceBranding.supportEmail}`}>
+                    {branding.instanceBranding.supportEmail}
                   </Link>
-                  .
-                </Trans>
-              </Text>
+                </Text>
+              )}
             </Section>
           </Container>
 

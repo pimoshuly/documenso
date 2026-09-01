@@ -10,10 +10,10 @@ import { TemplateRecipientExpired } from '../template-components/template-recipi
 export type RecipientExpiredEmailTemplateProps = Partial<TemplateRecipientExpiredProps>;
 
 export const RecipientExpiredTemplate = ({
-  documentName = 'Open Source Pledge.pdf',
-  recipientName = 'John Doe',
+  documentName = 'Example Agreement.pdf',
+  recipientName = 'Example Recipient',
   recipientEmail = 'john@example.com',
-  documentLink = 'https://documenso.com',
+  documentLink = 'https://example.com/documents/example',
   assetBaseUrl = 'http://localhost:3002',
 }: RecipientExpiredEmailTemplateProps) => {
   const { _ } = useLingui();

@@ -10,7 +10,7 @@ import { TemplateFooter } from '../template-components/template-footer';
 export type DocumentPendingEmailTemplateProps = Partial<TemplateDocumentPendingProps>;
 
 export const DocumentPendingEmailTemplate = ({
-  documentName = 'Open Source Pledge.pdf',
+  documentName = 'Example Agreement.pdf',
   assetBaseUrl = 'http://localhost:3002',
 }: DocumentPendingEmailTemplateProps) => {
   const { _ } = useLingui();

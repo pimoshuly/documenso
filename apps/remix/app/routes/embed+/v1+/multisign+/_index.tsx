@@ -12,6 +12,7 @@ import { BrandingLogo } from '~/components/general/branding-logo';
 import { DocumentSigningAuthProvider } from '~/components/general/document-signing/document-signing-auth-provider';
 import { DocumentSigningProvider } from '~/components/general/document-signing/document-signing-provider';
 import { DocumentSigningRecipientProvider } from '~/components/general/document-signing/document-signing-recipient-provider';
+import { InstanceLegalLinks } from '~/components/general/instance-legal-links';
 import { injectCss } from '~/utils/css-vars';
 import { superLoaderJson, useSuperLoaderData } from '~/utils/super-json-loader';
 
@@ -267,6 +268,8 @@ export default function MultisignPage() {
             <BrandingLogo className="ml-2 inline-block h-[14px]" />
           </div>
         )}
+
+        <InstanceLegalLinks className="fixed right-2 bottom-2 z-40 rounded bg-background/90 px-2 py-1 shadow-sm" />
       </div>
     );
   }
@@ -284,6 +287,8 @@ export default function MultisignPage() {
           <BrandingLogo className="ml-2 inline-block h-[14px]" />
         </div>
       )}
+
+      <InstanceLegalLinks className="fixed right-2 bottom-2 z-40 rounded bg-background/90 px-2 py-1 shadow-sm" />
     </div>
   );
 }

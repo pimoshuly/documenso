@@ -1,8 +1,6 @@
 // sort-imports-ignore
 import '../konva/skia-backend';
 
-import fs from 'node:fs';
-import path from 'node:path';
 import type { Canvas } from '@documenso/skia-canvas';
 import { Image as SkiaImage } from '@documenso/skia-canvas';
 import type { I18n } from '@lingui/core';
@@ -13,13 +11,14 @@ import type { DateTimeFormatOptions } from 'luxon';
 import { DateTime } from 'luxon';
 import { match, P } from 'ts-pattern';
 import { UAParser } from 'ua-parser-js';
-
 import { DOCUMENT_STATUS } from '../../constants/document';
 import { APP_I18N_OPTIONS } from '../../constants/i18n';
+import { getInstanceBranding } from '../../constants/instance-branding';
 import { RECIPIENT_ROLES_DESCRIPTION } from '../../constants/recipient-roles';
 import type { TDocumentAuditLog } from '../../types/document-audit-logs';
 import { DOCUMENT_AUDIT_LOG_TYPE } from '../../types/document-audit-logs';
 import { formatDocumentAuditLogAction } from '../../utils/document-audit-logs';
+import { getInstanceBrandingImage } from '../branding/get-instance-branding-image';
 import { ensureFontLibrary } from './helpers';
 
 export type AuditLogRecipient = {
@@ -437,24 +436,43 @@ const renderRow = (options: RenderRowOptions) => {
   return rowGroup;
 };
 
-const renderBranding = () => {
+const renderBranding = async () => {
   const branding = new Konva.Group();
-
+  const instanceBranding = getInstanceBranding();
   const brandingHeight = 16;
+  const logo = await getInstanceBrandingImage();
+  let hasLogo = false;
 
-  const logoPath = path.join(process.cwd(), 'public/static/logo.png');
-  const logo = fs.readFileSync(logoPath);
+  if (logo) {
+    try {
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+      const image = new SkiaImage(logo) as unknown as HTMLImageElement;
 
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  const img = new SkiaImage(logo) as unknown as HTMLImageElement;
+      branding.add(
+        new Konva.Image({
+          image,
+          height: brandingHeight,
+          width: brandingHeight * (image.width / image.height),
+        }),
+      );
+      hasLogo = true;
+    } catch {
+      hasLogo = false;
+    }
+  }
 
-  const brandingImage = new Konva.Image({
-    image: img,
-    height: brandingHeight,
-    width: brandingHeight * (img.width / img.height),
-  });
+  if (!hasLogo) {
+    branding.add(
+      new Konva.Text({
+        text: instanceBranding.name,
+        fontFamily: 'Inter',
+        fontSize: textSm,
+        fontStyle: fontMedium,
+        height: brandingHeight,
+      }),
+    );
+  }
 
-  branding.add(brandingImage);
   return branding;
 };
 
@@ -605,7 +623,7 @@ export async function renderAuditLogs({
     overviewCard,
   });
 
-  const brandingGroup = renderBranding();
+  const brandingGroup = await renderBranding();
   const brandingRect = brandingGroup.getClientRect();
   const brandingTopPadding = 24;
 

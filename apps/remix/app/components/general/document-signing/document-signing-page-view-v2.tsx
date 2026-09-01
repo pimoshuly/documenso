@@ -1,4 +1,5 @@
 import { useCurrentEnvelopeRender } from '@documenso/lib/client-only/providers/envelope-render-provider';
+import { getInstanceBranding, resolveInstanceBrandingUrl } from '@documenso/lib/constants/instance-branding';
 import { PDF_VIEWER_ERROR_MESSAGES } from '@documenso/lib/constants/pdf-viewer-i18n';
 import { mapSecondaryIdToDocumentId } from '@documenso/lib/utils/envelope';
 import { cn } from '@documenso/ui/lib/utils';
@@ -37,11 +38,14 @@ import { DocumentSigningAttachmentsPopover } from '../document-signing/document-
 import { EnvelopeItemSelector } from '../envelope-editor/envelope-file-selector';
 import EnvelopeSignerForm from '../envelope-signing/envelope-signer-form';
 import { EnvelopeSignerHeader } from '../envelope-signing/envelope-signer-header';
+import { InstanceLegalLinks } from '../instance-legal-links';
 import { DocumentSigningMobileWidget } from './document-signing-mobile-widget';
 import { DocumentSigningRejectDialog } from './document-signing-reject-dialog';
 import { useRequiredEnvelopeSigningContext } from './envelope-signing-provider';
 
 export const DocumentSigningPageViewV2 = () => {
+  const instanceBranding = getInstanceBranding();
+  const instanceWebsiteUrl = resolveInstanceBrandingUrl(instanceBranding.websiteUrl) ?? '/';
   const { envelopeItems, currentEnvelopeItem, setCurrentEnvelopeItem } = useCurrentEnvelopeRender();
 
   const scrollableContainerRef = useRef<HTMLDivElement>(null);
@@ -281,9 +285,11 @@ export const DocumentSigningPageViewV2 = () => {
                 <DocumentSigningMobileWidget />
               </div>
 
+              <InstanceLegalLinks className="fixed bottom-2 left-2 z-40 hidden rounded bg-background/90 px-2 py-1 shadow-sm lg:flex" />
+
               {!hidePoweredBy && (
                 <a
-                  href="https://documenso.com"
+                  href={instanceWebsiteUrl}
                   target="_blank"
                   className="fixed right-0 bottom-0 z-40 hidden cursor-pointer rounded-tl bg-primary px-2 py-1 font-medium text-primary-foreground text-xs opacity-60 hover:opacity-100 lg:block"
                   rel="noopener"

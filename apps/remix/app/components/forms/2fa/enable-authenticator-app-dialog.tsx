@@ -1,6 +1,7 @@
 import { authClient } from '@documenso/auth/client';
 import { downloadFile } from '@documenso/lib/client-only/download-file';
 import { useSession } from '@documenso/lib/client-only/providers/session';
+import { getInstanceBranding } from '@documenso/lib/constants/instance-branding';
 import { Button } from '@documenso/ui/primitives/button';
 import {
   Dialog,
@@ -37,6 +38,7 @@ export type EnableAuthenticatorAppDialogProps = {
 };
 
 export const EnableAuthenticatorAppDialog = ({ onSuccess }: EnableAuthenticatorAppDialogProps) => {
+  const instanceBranding = getInstanceBranding();
   const { _ } = useLingui();
   const { toast } = useToast();
   const { refreshSession } = useSession();
@@ -111,7 +113,7 @@ export const EnableAuthenticatorAppDialog = ({ onSuccess }: EnableAuthenticatorA
       });
 
       downloadFile({
-        filename: 'documenso-2FA-recovery-codes.txt',
+        filename: `${instanceBranding.downloadFilenamePrefix}-2FA-recovery-codes.txt`,
         data: blob,
       });
     }

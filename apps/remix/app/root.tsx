@@ -2,6 +2,11 @@ import { getOptionalSession } from '@documenso/auth/server/lib/utils/get-session
 import { SessionProvider } from '@documenso/lib/client-only/providers/session';
 import { getBasePath } from '@documenso/lib/constants/app';
 import { APP_I18N_OPTIONS, type SupportedLanguageCodes } from '@documenso/lib/constants/i18n';
+import {
+  getInstanceBranding,
+  getInstanceBrandingCssVariables,
+  resolveInstanceBrandingUrl,
+} from '@documenso/lib/constants/instance-branding';
 import { createPublicEnv } from '@documenso/lib/utils/env';
 import { extractLocaleData } from '@documenso/lib/utils/i18n';
 import { TrpcProvider } from '@documenso/trpc/react';
@@ -113,6 +118,10 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
   const [theme] = useTheme();
 
   const basePath = data.basePath ?? '';
+  const instanceBranding = getInstanceBranding();
+  const instanceIconUrl =
+    resolveInstanceBrandingUrl(instanceBranding.iconUrl) ?? `${basePath}/static/brand/default-icon.svg`;
+  const instanceBrandingStyles = getInstanceBrandingCssVariables(instanceBranding);
 
   // Recipient routes (signing pages) put `documenso-branded` on <body> so the
   // <style> block from `RecipientBranding` applies to BOTH the main tree and
@@ -126,14 +135,21 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
     // `data-theme`/`class` on <html> before hydration (PreventFlashOnWrongTheme),
     // so the server-rendered attributes never match the client render when the
     // theme is resolved from the system preference. Attribute-only, one level deep.
-    <html translate="no" lang={lang} data-theme={theme} className={theme ?? ''} suppressHydrationWarning>
+    <html
+      translate="no"
+      lang={lang}
+      data-theme={theme}
+      className={theme ?? ''}
+      style={instanceBrandingStyles}
+      suppressHydrationWarning
+    >
       <head>
         <meta charSet="utf-8" />
-        <link rel="apple-touch-icon" sizes="180x180" href={`${basePath}/apple-touch-icon.png`} />
-        <link rel="icon" type="image/png" sizes="32x32" href={`${basePath}/favicon-32x32.png`} />
-        <link rel="icon" type="image/png" sizes="16x16" href={`${basePath}/favicon-16x16.png`} />
+        <link rel="apple-touch-icon" href={instanceIconUrl} />
+        <link rel="icon" href={instanceIconUrl} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="manifest" href={`${basePath}/site.webmanifest`} />
+        <meta name="theme-color" content={instanceBranding.primaryColor} />
+        <link rel="manifest" href={`${basePath}/api/manifest`} />
         <meta name="google" content="notranslate" />
         <Meta />
         <Links nonce={nonce(cspNonce)} />
@@ -159,7 +175,7 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
             <div className="mx-auto flex h-auto max-w-screen-xl items-center justify-center px-4 py-3 text-sm font-medium">
               <div className="flex items-center">
                 <AlertTriangleIcon className="mr-2 h-4 w-4" />
-                <Trans>This is an expired license instance of Documenso</Trans>
+                <Trans>This instance has an expired license</Trans>
               </div>
             </div>
           </div>

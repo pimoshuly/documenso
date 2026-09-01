@@ -1,4 +1,4 @@
-import { env } from '@documenso/lib/utils/env';
+import { resolveInstanceBrandingUrl } from '@documenso/lib/constants/instance-branding';
 import { Trans } from '@lingui/react/macro';
 
 import { Button, Section, Text } from '../components';
@@ -11,7 +11,7 @@ export interface TemplateResetPasswordProps {
 }
 
 export const TemplateResetPassword = ({ assetBaseUrl }: TemplateResetPasswordProps) => {
-  const NEXT_PUBLIC_WEBAPP_URL = env('NEXT_PUBLIC_WEBAPP_URL');
+  const signInUrl = resolveInstanceBrandingUrl('/signin', { absolute: true });
 
   return (
     <>
@@ -27,12 +27,14 @@ export const TemplateResetPassword = ({ assetBaseUrl }: TemplateResetPasswordPro
         </Text>
 
         <Section className="mt-8 mb-6 text-center">
-          <Button
-            className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-center font-medium text-primary-foreground text-sm no-underline"
-            href={`${NEXT_PUBLIC_WEBAPP_URL ?? 'http://localhost:3000'}/signin`}
-          >
-            <Trans>Sign In</Trans>
-          </Button>
+          {signInUrl && (
+            <Button
+              className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-center font-medium text-primary-foreground text-sm no-underline"
+              href={signInUrl}
+            >
+              <Trans>Sign In</Trans>
+            </Button>
+          )}
         </Section>
       </Section>
     </>

@@ -1,4 +1,3 @@
-import backgroundPattern from '@documenso/assets/images/background-pattern.png';
 import { Button } from '@documenso/ui/primitives/button';
 import type { MessageDescriptor } from '@lingui/core';
 import { msg } from '@lingui/core/macro';
@@ -7,6 +6,8 @@ import { Trans } from '@lingui/react/macro';
 import { motion } from 'framer-motion';
 import { ChevronLeft } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
+
+import { InstanceLegalLinks } from './instance-legal-links';
 
 type ErrorCodeMap = Record<
   number,
@@ -58,22 +59,14 @@ export const GenericErrorLayout = ({
   const { subHeading, heading, message } = errorCodeMap[errorCode || 500] ?? defaultErrorCodeMap[500];
 
   return (
-    <div className="fixed inset-0 z-0 flex h-screen w-screen items-center justify-center">
+    <div className="fixed inset-0 z-0 flex h-screen w-screen items-center justify-center bg-gradient-to-br from-background via-background to-muted">
       <div className="absolute -inset-24 -z-10">
         <motion.div
           className="flex h-full w-full items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.8, transition: { duration: 0.5, delay: 0.5 } }}
         >
-          <img
-            src={backgroundPattern}
-            alt="background pattern"
-            className="-mt-[15vh] -ml-[50vw] h-full scale-100 object-cover md:scale-100 lg:scale-[100%] dark:contrast-[70%] dark:invert dark:sepia"
-            style={{
-              mask: 'radial-gradient(rgba(255, 255, 255, 1) 0%, transparent 80%)',
-              WebkitMask: 'radial-gradient(rgba(255, 255, 255, 1) 0%, transparent 80%)',
-            }}
-          />
+          <div className="h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
         </motion.div>
       </div>
 
@@ -111,6 +104,8 @@ export const GenericErrorLayout = ({
 
             {children}
           </div>
+
+          <InstanceLegalLinks className="mt-8" />
         </div>
       </div>
     </div>

@@ -1,7 +1,8 @@
 import type { InternalClaimPlans } from '@documenso/ee/server-only/stripe/get-internal-claim-plans';
 import { useUpdateSearchParams } from '@documenso/lib/client-only/hooks/use-update-search-params';
 import { useSession } from '@documenso/lib/client-only/providers/session';
-import { DOCUMENSO_CLOUD_ENTERPRISE_CTA_URL, IS_BILLING_ENABLED } from '@documenso/lib/constants/app';
+import { IS_BILLING_ENABLED } from '@documenso/lib/constants/app';
+import { getInstanceBranding, resolveInstanceBrandingUrl } from '@documenso/lib/constants/instance-branding';
 import { AppError } from '@documenso/lib/errors/app-error';
 import { INTERNAL_CLAIM_ID } from '@documenso/lib/types/subscription';
 import { parseMessageDescriptorMacro } from '@documenso/lib/utils/i18n';
@@ -269,6 +270,8 @@ type BillingPlanFormProps = {
 
 const BillingPlanForm = ({ value, onChange, plans, canCreateFreeOrganisation }: BillingPlanFormProps) => {
   const { t } = useLingui();
+  const instanceBranding = getInstanceBranding();
+  const plansUrl = resolveInstanceBrandingUrl(instanceBranding.plansUrl);
 
   const [billingPeriod, setBillingPeriod] = useState<'monthlyPrice' | 'yearlyPrice'>('yearlyPrice');
 
@@ -379,33 +382,39 @@ const BillingPlanForm = ({ value, onChange, plans, canCreateFreeOrganisation }: 
           </button>
         ))}
 
-        <Link
-          to={DOCUMENSO_CLOUD_ENTERPRISE_CTA_URL}
-          target="_blank"
-          className="flex items-center space-x-2 rounded-md border bg-muted/30 p-4"
-        >
-          <div className="flex-1 font-normal">
-            <p className="font-medium text-muted-foreground">
-              <Trans>Enterprise</Trans>
-            </p>
-            <p className="flex flex-row items-center gap-1 text-muted-foreground">
-              <Trans>Contact sales here</Trans>
-              <ExternalLinkIcon className="h-4 w-4" />
-            </p>
-          </div>
-        </Link>
+        {plansUrl && (
+          <Link
+            to={plansUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center space-x-2 rounded-md border bg-muted/30 p-4"
+          >
+            <div className="flex-1 font-normal">
+              <p className="font-medium text-muted-foreground">
+                <Trans>Enterprise</Trans>
+              </p>
+              <p className="flex flex-row items-center gap-1 text-muted-foreground">
+                <Trans>Contact sales here</Trans>
+                <ExternalLinkIcon className="h-4 w-4" />
+              </p>
+            </div>
+          </Link>
+        )}
       </div>
 
-      <div className="mt-6 text-center">
-        <Link
-          to="https://documenso.com/pricing"
-          className="flex items-center justify-center gap-1 text-primary text-sm hover:text-primary/80 hover:underline"
-          target="_blank"
-        >
-          <Trans>Compare all plans and features in detail</Trans>
-          <ExternalLinkIcon className="h-4 w-4" />
-        </Link>
-      </div>
+      {plansUrl && (
+        <div className="mt-6 text-center">
+          <Link
+            to={plansUrl}
+            className="flex items-center justify-center gap-1 text-primary text-sm hover:text-primary/80 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Trans>Compare all plans and features in detail</Trans>
+            <ExternalLinkIcon className="h-4 w-4" />
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

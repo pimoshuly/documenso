@@ -2,7 +2,7 @@ import type { OrganisationGlobalSettings } from '@prisma/client';
 
 import { NEXT_PUBLIC_WEBAPP_URL } from '../constants/app';
 import { ZCssVarsSchema } from '../types/css-vars';
-import { resolveEmailBrandingColors } from './email-branding-colors';
+import { getInstanceEmailBrandingColors, resolveEmailBrandingColors } from './email-branding-colors';
 
 export const teamGlobalSettingsToBranding = (
   settings: Omit<OrganisationGlobalSettings, 'id'>,
@@ -10,7 +10,9 @@ export const teamGlobalSettingsToBranding = (
   hidePoweredBy: boolean,
 ) => {
   const parsedColors = settings.brandingColors ? ZCssVarsSchema.safeParse(settings.brandingColors) : null;
-  const resolvedBrandingColors = resolveEmailBrandingColors(parsedColors?.success ? parsedColors.data : null);
+  const resolvedBrandingColors = settings.brandingEnabled
+    ? resolveEmailBrandingColors(parsedColors?.success ? parsedColors.data : null, getInstanceEmailBrandingColors())
+    : null;
 
   return {
     ...settings,
@@ -29,7 +31,9 @@ export const organisationGlobalSettingsToBranding = (
   hidePoweredBy: boolean,
 ) => {
   const parsedColors = settings.brandingColors ? ZCssVarsSchema.safeParse(settings.brandingColors) : null;
-  const resolvedBrandingColors = resolveEmailBrandingColors(parsedColors?.success ? parsedColors.data : null);
+  const resolvedBrandingColors = settings.brandingEnabled
+    ? resolveEmailBrandingColors(parsedColors?.success ? parsedColors.data : null, getInstanceEmailBrandingColors())
+    : null;
 
   return {
     ...settings,

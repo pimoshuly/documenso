@@ -1,9 +1,12 @@
 import { SUPPORT_EMAIL } from '@documenso/lib/constants/app';
+import { getInstanceBranding } from '@documenso/lib/constants/instance-branding';
 import { Button } from '@documenso/ui/primitives/button';
 import { Trans } from '@lingui/react/macro';
 import { Link } from 'react-router';
 
 export default function SignatureDisclosure() {
+  const branding = getInstanceBranding();
+
   return (
     <div>
       <article className="prose dark:prose-invert">
@@ -16,10 +19,10 @@ export default function SignatureDisclosure() {
         </h2>
         <p>
           <Trans>
-            Thank you for using Documenso to perform your electronic document signing. The purpose of this disclosure is
-            to inform you about the process, legality, and your rights regarding the use of electronic signatures on our
-            platform. By opting to use an electronic signature, you are agreeing to the terms and conditions outlined
-            below.
+            Thank you for using {branding.name} to perform your electronic document signing. The purpose of this
+            disclosure is to inform you about the process, legality, and your rights regarding the use of electronic
+            signatures on our platform. By opting to use an electronic signature, you are agreeing to the terms and
+            conditions outlined below.
           </Trans>
         </p>
 
@@ -127,21 +130,25 @@ export default function SignatureDisclosure() {
         </h2>
         <p>
           <Trans>
-            By proceeding to use the electronic signature service provided by Documenso, you affirm that you have read
-            and understood this disclosure. You agree to all terms and conditions related to the use of electronic
+            By proceeding to use the electronic signature service provided by {branding.name}, you affirm that you have
+            read and understood this disclosure. You agree to all terms and conditions related to the use of electronic
             signatures and electronic transactions as outlined herein.
           </Trans>
         </p>
 
-        <h2>
-          <Trans>Contact Information</Trans>
-        </h2>
-        <p>
-          <Trans>
-            For any questions regarding this disclosure, electronic signatures, or any related process, please contact
-            us at: <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
-          </Trans>
-        </p>
+        {SUPPORT_EMAIL && (
+          <>
+            <h2>
+              <Trans>Contact Information</Trans>
+            </h2>
+            <p>
+              <Trans>
+                For any questions regarding this disclosure, electronic signatures, or any related process, please
+                contact us at: <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
+              </Trans>
+            </p>
+          </>
+        )}
       </article>
 
       <div className="mt-8">

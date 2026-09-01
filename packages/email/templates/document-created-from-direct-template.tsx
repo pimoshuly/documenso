@@ -18,10 +18,10 @@ export type DocumentCompletedEmailTemplateProps = {
 };
 
 export const DocumentCreatedFromDirectTemplateEmailTemplate = ({
-  recipientName = 'John Doe',
+  recipientName = 'Example Recipient',
   recipientRole = RecipientRole.SIGNER,
   documentLink = 'http://localhost:3000',
-  documentName = 'Open Source Pledge.pdf',
+  documentName = 'Example Agreement.pdf',
   assetBaseUrl = 'http://localhost:3002',
 }: DocumentCompletedEmailTemplateProps) => {
   const { _ } = useLingui();

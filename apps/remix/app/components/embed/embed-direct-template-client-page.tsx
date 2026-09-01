@@ -41,6 +41,7 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 
 import { BrandingLogo } from '~/components/general/branding-logo';
+import { InstanceLegalLinks } from '~/components/general/instance-legal-links';
 import PDFViewerLazy from '~/components/general/pdf-viewer/pdf-viewer-lazy';
 import { injectCss } from '~/utils/css-vars';
 import { getDirectTemplateErrorMessage } from '~/utils/toast-error-messages';
@@ -522,6 +523,8 @@ export const EmbedDirectTemplateClientPage = ({
           <BrandingLogo className="ml-2 inline-block h-[14px]" />
         </div>
       )}
+
+      <InstanceLegalLinks className="fixed right-2 bottom-2 z-40 rounded bg-background/90 px-2 py-1 shadow-sm" />
     </div>
   );
 };

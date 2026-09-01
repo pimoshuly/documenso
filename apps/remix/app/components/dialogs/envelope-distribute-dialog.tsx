@@ -1,5 +1,6 @@
 import { useCurrentEnvelopeEditor } from '@documenso/lib/client-only/providers/envelope-editor-provider';
 import { useCurrentOrganisation } from '@documenso/lib/client-only/providers/organisation';
+import { getInstanceBranding } from '@documenso/lib/constants/instance-branding';
 import { DO_NOT_INVALIDATE_QUERY_ON_MUTATION } from '@documenso/lib/constants/trpc';
 import { AppError } from '@documenso/lib/errors/app-error';
 import { extractDocumentAuthMethods } from '@documenso/lib/utils/document-auth';
@@ -64,6 +65,7 @@ export const EnvelopeDistributeDialog = ({
   documentRootPath,
   onDistribute,
 }: EnvelopeDistributeDialogProps) => {
+  const instanceBranding = getInstanceBranding();
   const organisation = useCurrentOrganisation();
 
   const { envelope, syncEnvelope, isAutosaving, autosaveError } = useCurrentEnvelopeEditor();
@@ -351,7 +353,7 @@ export const EnvelopeDistributeDialog = ({
                                             </SelectItem>
                                           ))}
 
-                                          <SelectItem value={'-1'}>Documenso</SelectItem>
+                                          <SelectItem value={'-1'}>{instanceBranding.name}</SelectItem>
                                         </SelectContent>
                                       </Select>
                                     </FormControl>

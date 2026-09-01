@@ -1,7 +1,8 @@
 import { env } from '../utils/env';
+import { getInstanceBranding } from './instance-branding';
 
-export const FROM_ADDRESS = env('NEXT_PRIVATE_SMTP_FROM_ADDRESS') || 'noreply@documenso.com';
-export const FROM_NAME = env('NEXT_PRIVATE_SMTP_FROM_NAME') || 'Documenso';
+export const FROM_ADDRESS = env('NEXT_PRIVATE_SMTP_FROM_ADDRESS') || 'noreply@localhost';
+export const FROM_NAME = env('NEXT_PRIVATE_SMTP_FROM_NAME') || getInstanceBranding().name;
 
 export const DOCUMENSO_INTERNAL_EMAIL = {
   name: FROM_NAME,

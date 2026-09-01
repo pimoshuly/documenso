@@ -2,6 +2,7 @@ import { authClient } from '@documenso/auth/client';
 import { useOptionalCurrentOrganisation } from '@documenso/lib/client-only/providers/organisation';
 import { useSession } from '@documenso/lib/client-only/providers/session';
 import { IS_BILLING_ENABLED } from '@documenso/lib/constants/app';
+import { getInstanceBranding, resolveInstanceBrandingUrl } from '@documenso/lib/constants/instance-branding';
 import { EXTENDED_ORGANISATION_MEMBER_ROLE_MAP } from '@documenso/lib/constants/organisations-translations';
 import { EXTENDED_TEAM_MEMBER_ROLE_MAP } from '@documenso/lib/constants/teams-translations';
 import { formatAvatarUrl } from '@documenso/lib/utils/avatars';
@@ -31,6 +32,8 @@ import { useOptionalCurrentTeam } from '~/providers/team';
 
 export const OrgMenuSwitcher = () => {
   const { _ } = useLingui();
+  const instanceBranding = getInstanceBranding();
+  const sourceCodeUrl = resolveInstanceBrandingUrl(instanceBranding.sourceCodeUrl);
 
   const { user, organisations } = useSession();
 
@@ -318,6 +321,20 @@ export const OrgMenuSwitcher = () => {
                   </Link>
                 </DropdownMenuItem>
               )}
+
+              {sourceCodeUrl && (
+                <DropdownMenuItem className="px-4 py-2 text-muted-foreground" asChild>
+                  <a href={sourceCodeUrl} target="_blank" rel="noopener noreferrer">
+                    <Trans>Source code</Trans>
+                  </a>
+                </DropdownMenuItem>
+              )}
+
+              <DropdownMenuItem className="px-4 py-2 text-muted-foreground" asChild>
+                <Link to="/articles/license">
+                  <Trans>AGPL-3.0 license</Trans>
+                </Link>
+              </DropdownMenuItem>
 
               <DropdownMenuItem
                 className="hover:!text-muted-foreground px-4 py-2 text-muted-foreground"

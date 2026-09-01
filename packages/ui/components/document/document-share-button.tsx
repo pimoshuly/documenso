@@ -1,5 +1,6 @@
 import { useCopyShareLink } from '@documenso/lib/client-only/hooks/use-copy-share-link';
 import { NEXT_PUBLIC_WEBAPP_URL } from '@documenso/lib/constants/app';
+import { getInstanceBranding } from '@documenso/lib/constants/instance-branding';
 import { DO_NOT_INVALIDATE_QUERY_ON_MUTATION } from '@documenso/lib/constants/trpc';
 import { generateTwitterIntent } from '@documenso/lib/universal/generate-twitter-intent';
 import { trpc } from '@documenso/trpc/react';
@@ -33,6 +34,7 @@ export type DocumentShareButtonProps = HTMLAttributes<HTMLButtonElement> & {
 export const DocumentShareButton = ({ token, documentId, className, trigger }: DocumentShareButtonProps) => {
   const { _ } = useLingui();
   const { toast } = useToast();
+  const instanceBranding = getInstanceBranding();
 
   const { copyShareLink, createAndCopyShareLink, isCopyingShareLink } = useCopyShareLink({
     onSuccess: () =>
@@ -105,7 +107,7 @@ export const DocumentShareButton = ({ token, documentId, className, trigger }: D
 
     window.open(
       generateTwitterIntent(
-        `I just ${token ? 'signed' : 'sent'} a document in style with @documenso. Check it out!`,
+        `I just ${token ? 'signed' : 'sent'} a document with ${instanceBranding.name}. Check it out!`,
         `${NEXT_PUBLIC_WEBAPP_URL()}/share/${slug}`,
       ),
       '_blank',
@@ -149,8 +151,8 @@ export const DocumentShareButton = ({ token, documentId, className, trigger }: D
 
         <div className="flex w-full flex-col">
           <div className="rounded-md border p-4">
-            I just {token ? 'signed' : 'sent'} a document in style with{' '}
-            <span className="font-medium text-blue-400">@documenso</span>. Check it out!
+            I just {token ? 'signed' : 'sent'} a document with{' '}
+            <span className="font-medium text-blue-400">{instanceBranding.name}</span>. Check it out!
             <span className="mt-2 block" />
             <span
               className={cn('break-all font-medium text-blue-400', {

@@ -3,8 +3,7 @@ import { sha256 } from '@noble/hashes/sha256';
 import { createTOTPKeyURI } from 'oslo/otp';
 
 import { DOCUMENSO_ENCRYPTION_KEY } from '../../../constants/crypto';
-
-const ISSUER = 'Documenso Email 2FA';
+import { getInstanceBranding } from '../../../constants/instance-branding';
 
 export type GenerateTwoFactorCredentialsFromEmailOptions = {
   envelopeId: string;
@@ -29,7 +28,7 @@ export const generateTwoFactorCredentialsFromEmail = ({
 
   const secret = hmac(sha256, DOCUMENSO_ENCRYPTION_KEY, identity);
 
-  const uri = createTOTPKeyURI(ISSUER, email, secret);
+  const uri = createTOTPKeyURI(`${getInstanceBranding().name} Email 2FA`, email, secret);
 
   return {
     uri,

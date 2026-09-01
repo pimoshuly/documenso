@@ -5,6 +5,7 @@ import { DOCUMENT_DISTRIBUTION_METHODS, DOCUMENT_SIGNATURE_TYPES } from '@docume
 import { ZEnvelopeExpirationPeriod } from '@documenso/lib/constants/envelope-expiration';
 import { ZEnvelopeReminderSettings } from '@documenso/lib/constants/envelope-reminder';
 import { isValidLanguageCode, SUPPORTED_LANGUAGE_CODES, SUPPORTED_LANGUAGES } from '@documenso/lib/constants/i18n';
+import { getInstanceBranding } from '@documenso/lib/constants/instance-branding';
 import { DEFAULT_DOCUMENT_TIME_ZONE, TIME_ZONES } from '@documenso/lib/constants/time-zones';
 import { DO_NOT_INVALIDATE_QUERY_ON_MUTATION } from '@documenso/lib/constants/trpc';
 import { AppError } from '@documenso/lib/errors/app-error';
@@ -163,6 +164,7 @@ type EnvelopeEditorSettingsDialogProps = {
 } & Omit<DialogPrimitive.DialogProps, 'children'>;
 
 export const EnvelopeEditorSettingsDialog = ({ trigger, ...props }: EnvelopeEditorSettingsDialogProps) => {
+  const instanceBranding = getInstanceBranding();
   const { t } = useLingui();
   const { toast } = useToast();
 
@@ -775,7 +777,7 @@ export const EnvelopeEditorSettingsDialog = ({ trigger, ...props }: EnvelopeEdit
                                       </SelectItem>
                                     ))}
 
-                                    <SelectItem value={'-1'}>Documenso</SelectItem>
+                                    <SelectItem value={'-1'}>{instanceBranding.name}</SelectItem>
                                   </SelectContent>
                                 </Select>
                               </FormControl>

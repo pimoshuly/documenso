@@ -2,16 +2,22 @@
 
 # dependencies
 node_modules
+**/node_modules
 .pnp
 .pnp.js
+
+# source-control metadata
+.git
 
 # testing
 coverage
 
 # next.js
 .next/
+**/.next/
 out/
 build
+**/build
 
 # misc
 .DS_Store

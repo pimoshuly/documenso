@@ -31,7 +31,7 @@ All transports require sender configuration:
 
 ```bash
 NEXT_PRIVATE_SMTP_FROM_ADDRESS="noreply@example.com"
-NEXT_PRIVATE_SMTP_FROM_NAME="Documenso"
+NEXT_PRIVATE_SMTP_FROM_NAME="Example Sign"
 ```
 
 <Callout type="warn">
@@ -69,7 +69,7 @@ NEXT_PRIVATE_SMTP_PORT="587"
 NEXT_PRIVATE_SMTP_USERNAME="your-username"
 NEXT_PRIVATE_SMTP_PASSWORD="your-password"
 NEXT_PRIVATE_SMTP_FROM_ADDRESS="noreply@example.com"
-NEXT_PRIVATE_SMTP_FROM_NAME="Documenso"
+NEXT_PRIVATE_SMTP_FROM_NAME="Example Sign"
 ```
 
 ### Common SMTP Provider Examples
@@ -83,7 +83,7 @@ NEXT_PRIVATE_SMTP_PORT="587"
 NEXT_PRIVATE_SMTP_USERNAME="your-email@gmail.com"
 NEXT_PRIVATE_SMTP_PASSWORD="your-app-password"
 NEXT_PRIVATE_SMTP_FROM_ADDRESS="your-email@gmail.com"
-NEXT_PRIVATE_SMTP_FROM_NAME="Documenso"
+NEXT_PRIVATE_SMTP_FROM_NAME="Example Sign"
 ```
 
 <Callout type="info">
@@ -100,7 +100,7 @@ NEXT_PRIVATE_SMTP_PORT="587"
 NEXT_PRIVATE_SMTP_USERNAME="your-email@yourdomain.com"
 NEXT_PRIVATE_SMTP_PASSWORD="your-password"
 NEXT_PRIVATE_SMTP_FROM_ADDRESS="your-email@yourdomain.com"
-NEXT_PRIVATE_SMTP_FROM_NAME="Documenso"
+NEXT_PRIVATE_SMTP_FROM_NAME="Example Sign"
 ```
 
 **Amazon SES:**
@@ -112,7 +112,7 @@ NEXT_PRIVATE_SMTP_PORT="587"
 NEXT_PRIVATE_SMTP_USERNAME="your-ses-smtp-username"
 NEXT_PRIVATE_SMTP_PASSWORD="your-ses-smtp-password"
 NEXT_PRIVATE_SMTP_FROM_ADDRESS="noreply@yourdomain.com"
-NEXT_PRIVATE_SMTP_FROM_NAME="Documenso"
+NEXT_PRIVATE_SMTP_FROM_NAME="Example Sign"
 ```
 
 **Postmark:**
@@ -124,7 +124,7 @@ NEXT_PRIVATE_SMTP_PORT="587"
 NEXT_PRIVATE_SMTP_USERNAME="your-postmark-server-api-token"
 NEXT_PRIVATE_SMTP_PASSWORD="your-postmark-server-api-token"
 NEXT_PRIVATE_SMTP_FROM_ADDRESS="noreply@yourdomain.com"
-NEXT_PRIVATE_SMTP_FROM_NAME="Documenso"
+NEXT_PRIVATE_SMTP_FROM_NAME="Example Sign"
 ```
 
 ### SMTP with API Key (smtp-api)
@@ -151,7 +151,7 @@ NEXT_PRIVATE_SMTP_PORT="587"
 NEXT_PRIVATE_SMTP_APIKEY_USER="apikey"
 NEXT_PRIVATE_SMTP_APIKEY="SG.xxxxxxxxxxxxxxxxxxxx"
 NEXT_PRIVATE_SMTP_FROM_ADDRESS="noreply@yourdomain.com"
-NEXT_PRIVATE_SMTP_FROM_NAME="Documenso"
+NEXT_PRIVATE_SMTP_FROM_NAME="Example Sign"
 ```
 
 ## Resend Configuration
@@ -171,7 +171,7 @@ NEXT_PRIVATE_SMTP_FROM_NAME="Documenso"
 NEXT_PRIVATE_SMTP_TRANSPORT="resend"
 NEXT_PRIVATE_RESEND_API_KEY="re_xxxxxxxxxxxxxxxxxxxx"
 NEXT_PRIVATE_SMTP_FROM_ADDRESS="noreply@yourdomain.com"
-NEXT_PRIVATE_SMTP_FROM_NAME="Documenso"
+NEXT_PRIVATE_SMTP_FROM_NAME="Example Sign"
 ```
 
 **Setup Steps:**
@@ -225,7 +225,7 @@ Set the variables in the table above, including `NEXT_PRIVATE_RESEND_API_KEY` an
 NEXT_PRIVATE_SMTP_TRANSPORT="mailchannels"
 NEXT_PRIVATE_MAILCHANNELS_API_KEY="your-api-key"
 NEXT_PRIVATE_SMTP_FROM_ADDRESS="noreply@yourdomain.com"
-NEXT_PRIVATE_SMTP_FROM_NAME="Documenso"
+NEXT_PRIVATE_SMTP_FROM_NAME="Example Sign"
 ```
 
 **With DKIM Signing:**
@@ -237,7 +237,7 @@ NEXT_PRIVATE_MAILCHANNELS_DKIM_DOMAIN="yourdomain.com"
 NEXT_PRIVATE_MAILCHANNELS_DKIM_SELECTOR="mailchannels"
 NEXT_PRIVATE_MAILCHANNELS_DKIM_PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----"
 NEXT_PRIVATE_SMTP_FROM_ADDRESS="noreply@yourdomain.com"
-NEXT_PRIVATE_SMTP_FROM_NAME="Documenso"
+NEXT_PRIVATE_SMTP_FROM_NAME="Example Sign"
 ```
 
 ## Email Templates
@@ -260,7 +260,7 @@ Documenso uses React Email templates for all outgoing emails. The templates are 
 
 Email templates support branding customization through organisation settings. When branding is enabled:
 
-- Custom logo replaces the Documenso logo
+- An enabled organisation/team logo replaces the instance logo
 - Branding colors are applied to email elements
 
 Configure branding in the application under **Organisation Settings > Preferences > Branding**.
@@ -294,7 +294,7 @@ NEXT_PRIVATE_SMTP_TRANSPORT="smtp-auth"
 NEXT_PRIVATE_SMTP_HOST="localhost"
 NEXT_PRIVATE_SMTP_PORT="1025"
 NEXT_PRIVATE_SMTP_FROM_ADDRESS="test@localhost"
-NEXT_PRIVATE_SMTP_FROM_NAME="Documenso Test"
+NEXT_PRIVATE_SMTP_FROM_NAME="Example Sign Test"
 ```
 
 View sent emails at `http://localhost:8025`.

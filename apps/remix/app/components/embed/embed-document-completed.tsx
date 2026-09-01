@@ -1,4 +1,5 @@
 import signingCelebration from '@documenso/assets/images/signing-celebration.png';
+import { getInstanceBranding } from '@documenso/lib/constants/instance-branding';
 import { SigningCard3D } from '@documenso/ui/components/signing-card';
 import { Trans } from '@lingui/react/macro';
 import type { Signature } from '@prisma/client';
@@ -9,6 +10,8 @@ export type EmbedDocumentCompletedPageProps = {
 };
 
 export const EmbedDocumentCompleted = ({ name, signature }: EmbedDocumentCompletedPageProps) => {
+  const branding = getInstanceBranding();
+
   return (
     <div className="embed--DocumentCompleted relative mx-auto flex min-h-[100dvh] max-w-screen-lg flex-col items-center justify-center p-6">
       <h3 className="font-semibold text-2xl text-foreground">
@@ -18,7 +21,7 @@ export const EmbedDocumentCompleted = ({ name, signature }: EmbedDocumentComplet
       <div className="mt-8 w-full max-w-md">
         <SigningCard3D
           className="mx-auto w-full"
-          name={name || 'Documenso'}
+          name={name || branding.name}
           signature={signature}
           signingCelebrationImage={signingCelebration}
         />

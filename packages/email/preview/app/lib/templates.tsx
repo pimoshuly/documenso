@@ -56,13 +56,13 @@ export type TemplateDefinition = {
 const documentNameField: FieldConfig = {
   type: 'text',
   label: 'Document name',
-  default: 'Open Source Pledge.pdf',
+  default: 'Example Agreement.pdf',
 };
 
 const recipientNameField: FieldConfig = {
   type: 'text',
   label: 'Recipient name',
-  default: 'Lucas Smith',
+  default: 'Example Recipient',
 };
 
 const roleField: FieldConfig = {
@@ -93,8 +93,8 @@ export const templates: Record<string, TemplateDefinition> = {
     group: 'Documents',
     component: DocumentInviteEmailTemplate,
     fields: {
-      inviterName: { type: 'text', label: 'Inviter name', default: 'Lucas Smith' },
-      inviterEmail: { type: 'text', label: 'Inviter email', default: 'lucas@documenso.com' },
+      inviterName: { type: 'text', label: 'Inviter name', default: 'Example Sender' },
+      inviterEmail: { type: 'text', label: 'Inviter email', default: 'sender@example.com' },
       documentName: documentNameField,
       role: roleField,
       customBody: {
@@ -146,7 +146,7 @@ export const templates: Record<string, TemplateDefinition> = {
     group: 'Documents',
     component: DocumentCancelTemplate,
     fields: {
-      inviterName: { type: 'text', label: 'Inviter name', default: 'Lucas Smith' },
+      inviterName: { type: 'text', label: 'Inviter name', default: 'Example Sender' },
       documentName: documentNameField,
       cancellationReason: {
         type: 'textarea',
@@ -163,7 +163,7 @@ export const templates: Record<string, TemplateDefinition> = {
     fields: {
       recipientName: recipientNameField,
       documentName: documentNameField,
-      documentUrl: { type: 'text', label: 'Document URL', default: 'https://documenso.com' },
+      documentUrl: { type: 'text', label: 'Document URL', default: 'https://example.com/documents/example' },
       rejectionReason: {
         type: 'textarea',
         label: 'Rejection reason',
@@ -179,7 +179,7 @@ export const templates: Record<string, TemplateDefinition> = {
     fields: {
       recipientName: recipientNameField,
       documentName: documentNameField,
-      documentOwnerName: { type: 'text', label: 'Document owner', default: 'Timur Ercan' },
+      documentOwnerName: { type: 'text', label: 'Document owner', default: 'Example Owner' },
       reason: {
         type: 'textarea',
         label: 'Rejection reason',
@@ -209,7 +209,7 @@ export const templates: Record<string, TemplateDefinition> = {
     group: 'Documents',
     component: BulkSendCompleteEmail,
     fields: {
-      userName: { type: 'text', label: 'User name', default: 'Lucas Smith' },
+      userName: { type: 'text', label: 'User name', default: 'Example User' },
       templateName: { type: 'text', label: 'Template name', default: 'NDA Template' },
       totalProcessed: { type: 'number', label: 'Total processed', default: 50 },
       successCount: { type: 'number', label: 'Success count', default: 48 },
@@ -257,8 +257,8 @@ export const templates: Record<string, TemplateDefinition> = {
     group: 'Organisations',
     component: OrganisationInviteEmailTemplate,
     fields: {
-      senderName: { type: 'text', label: 'Sender name', default: 'Lucas Smith' },
-      organisationName: { type: 'text', label: 'Organisation name', default: 'Documenso' },
+      senderName: { type: 'text', label: 'Sender name', default: 'Example Sender' },
+      organisationName: { type: 'text', label: 'Organisation name', default: 'Example Organisation' },
     },
   },
   'organisation-join': {
@@ -266,8 +266,8 @@ export const templates: Record<string, TemplateDefinition> = {
     group: 'Organisations',
     component: OrganisationJoinEmailTemplate,
     fields: {
-      memberName: { type: 'text', label: 'Member name', default: 'Lucas Smith' },
-      organisationName: { type: 'text', label: 'Organisation name', default: 'Documenso' },
+      memberName: { type: 'text', label: 'Member name', default: 'Example Member' },
+      organisationName: { type: 'text', label: 'Organisation name', default: 'Example Organisation' },
     },
   },
   'organisation-leave': {
@@ -275,8 +275,8 @@ export const templates: Record<string, TemplateDefinition> = {
     group: 'Organisations',
     component: OrganisationLeaveEmailTemplate,
     fields: {
-      memberName: { type: 'text', label: 'Member name', default: 'Lucas Smith' },
-      organisationName: { type: 'text', label: 'Organisation name', default: 'Documenso' },
+      memberName: { type: 'text', label: 'Member name', default: 'Example Member' },
+      organisationName: { type: 'text', label: 'Organisation name', default: 'Example Organisation' },
     },
   },
   'organisation-delete': {
@@ -284,7 +284,7 @@ export const templates: Record<string, TemplateDefinition> = {
     group: 'Organisations',
     component: OrganisationDeleteEmailTemplate,
     fields: {
-      organisationName: { type: 'text', label: 'Organisation name', default: 'Documenso' },
+      organisationName: { type: 'text', label: 'Organisation name', default: 'Example Organisation' },
     },
   },
   'organisation-limit-alert': {
@@ -292,7 +292,7 @@ export const templates: Record<string, TemplateDefinition> = {
     group: 'Organisations',
     component: OrganisationLimitAlertEmailTemplate,
     fields: {
-      organisationName: { type: 'text', label: 'Organisation name', default: 'Documenso' },
+      organisationName: { type: 'text', label: 'Organisation name', default: 'Example Organisation' },
     },
   },
   'organisation-account-link-confirmation': {
@@ -300,7 +300,7 @@ export const templates: Record<string, TemplateDefinition> = {
     group: 'Organisations',
     component: OrganisationAccountLinkConfirmationTemplate,
     fields: {
-      organisationName: { type: 'text', label: 'Organisation name', default: 'Documenso' },
+      organisationName: { type: 'text', label: 'Organisation name', default: 'Example Organisation' },
     },
   },
 
@@ -310,7 +310,7 @@ export const templates: Record<string, TemplateDefinition> = {
     group: 'Teams',
     component: ConfirmTeamEmailTemplate,
     fields: {
-      teamName: { type: 'text', label: 'Team name', default: 'Documenso' },
+      teamName: { type: 'text', label: 'Team name', default: 'Example Team' },
     },
   },
   'team-delete': {
@@ -324,8 +324,8 @@ export const templates: Record<string, TemplateDefinition> = {
     group: 'Teams',
     component: TeamEmailRemovedTemplate,
     fields: {
-      teamName: { type: 'text', label: 'Team name', default: 'Documenso' },
-      teamEmail: { type: 'text', label: 'Team email', default: 'team@documenso.com' },
+      teamName: { type: 'text', label: 'Team name', default: 'Example Team' },
+      teamEmail: { type: 'text', label: 'Team email', default: 'team@example.com' },
     },
   },
 
@@ -338,7 +338,7 @@ export const templates: Record<string, TemplateDefinition> = {
       confirmationLink: {
         type: 'text',
         label: 'Confirmation link',
-        default: 'https://documenso.com/confirm',
+        default: 'https://example.com/confirm',
       },
     },
   },
@@ -350,7 +350,7 @@ export const templates: Record<string, TemplateDefinition> = {
       resetPasswordLink: {
         type: 'text',
         label: 'Reset link',
-        default: 'https://documenso.com/reset',
+        default: 'https://example.com/reset',
       },
     },
   },
@@ -359,8 +359,8 @@ export const templates: Record<string, TemplateDefinition> = {
     group: 'Account',
     component: ResetPasswordTemplate,
     fields: {
-      userName: { type: 'text', label: 'User name', default: 'Lucas Smith' },
-      userEmail: { type: 'text', label: 'User email', default: 'lucas@documenso.com' },
+      userName: { type: 'text', label: 'User name', default: 'Example User' },
+      userEmail: { type: 'text', label: 'User email', default: 'user@example.com' },
     },
   },
   'access-auth-2fa': {
@@ -368,10 +368,10 @@ export const templates: Record<string, TemplateDefinition> = {
     group: 'Account',
     component: AccessAuth2FAEmailTemplate,
     fields: {
-      documentTitle: { type: 'text', label: 'Document title', default: 'Open Source Pledge.pdf' },
+      documentTitle: { type: 'text', label: 'Document title', default: 'Example Agreement.pdf' },
       code: { type: 'text', label: 'Code', default: '123456' },
-      userEmail: { type: 'text', label: 'User email', default: 'lucas@documenso.com' },
-      userName: { type: 'text', label: 'User name', default: 'Lucas Smith' },
+      userEmail: { type: 'text', label: 'User email', default: 'user@example.com' },
+      userName: { type: 'text', label: 'User name', default: 'Example User' },
       expiresInMinutes: { type: 'number', label: 'Expires in (min)', default: 10 },
     },
   },
@@ -385,7 +385,7 @@ export const templates: Record<string, TemplateDefinition> = {
       resetPasswordLink: {
         type: 'text',
         label: 'Reset link',
-        default: 'https://documenso.com/reset',
+        default: 'https://example.com/reset',
       },
     },
   },

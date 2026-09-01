@@ -7,6 +7,7 @@ import { createElement } from 'react';
 import { getI18nInstance } from '../../../client-only/providers/i18n-server';
 import { NEXT_PUBLIC_WEBAPP_URL } from '../../../constants/app';
 import { DOCUMENSO_INTERNAL_EMAIL } from '../../../constants/email';
+import { formatInstanceEmailSubject } from '../../../constants/instance-branding';
 import { ONE_DAY } from '../../../constants/time';
 import { renderEmailWithI18N } from '../../../utils/render-email-with-i18n';
 import type { JobRunIO } from '../../client/_internal/job';
@@ -60,7 +61,7 @@ export const run = async ({ payload, io }: { payload: TSendAdminUserCreatedEmail
       name: user.name || '',
     },
     from: DOCUMENSO_INTERNAL_EMAIL,
-    subject: i18n._(msg`Welcome to Documenso`),
+    subject: formatInstanceEmailSubject(i18n._(msg`Welcome`)),
     html,
     text,
   });

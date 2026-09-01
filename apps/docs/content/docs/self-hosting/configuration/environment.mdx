@@ -28,6 +28,40 @@ These variables must be set for Documenso to function:
 
 ---
 
+## Instance Branding
+
+These public runtime variables control the visible identity of a self-hosted instance. URL values
+accept `http://`, `https://`, or root-relative application paths. Put local assets in
+`apps/remix/public/static/brand/` when building your own image.
+
+| Variable                                            | Default                                | Description                                      |
+| --------------------------------------------------- | -------------------------------------- | ------------------------------------------------ |
+| `NEXT_PUBLIC_INSTANCE_NAME`                         | `Document Signing`                     | Full application and WebAuthn display name       |
+| `NEXT_PUBLIC_INSTANCE_SHORT_NAME`                   | Instance name                          | Short PWA/manifest name                          |
+| `NEXT_PUBLIC_INSTANCE_DESCRIPTION`                  | `Securely send and sign documents.`    | Page and Open Graph description                  |
+| `NEXT_PUBLIC_INSTANCE_WEBSITE_URL`                  | -                                      | Optional public brand or home website             |
+| `NEXT_PUBLIC_INSTANCE_LOGO_URL`                     | -                                      | Horizontal logo/wordmark URL                     |
+| `NEXT_PUBLIC_INSTANCE_ICON_URL`                     | Neutral built-in document icon         | Favicon and PWA icon URL                         |
+| `NEXT_PUBLIC_INSTANCE_OPENGRAPH_IMAGE_URL`           | -                                      | General social preview image URL                 |
+| `NEXT_PUBLIC_INSTANCE_PRIMARY_COLOR`                | `#334155`                              | Primary UI/manifest color                        |
+| `NEXT_PUBLIC_INSTANCE_PRIMARY_FOREGROUND_COLOR`     | `#ffffff`                              | Text color used on the primary color             |
+| `NEXT_PUBLIC_INSTANCE_LEGAL_NAME`                   | -                                      | Optional legal operator name                      |
+| `NEXT_PUBLIC_INSTANCE_LEGAL_ADDRESS`                | -                                      | Optional public legal/postal address             |
+| `NEXT_PUBLIC_SUPPORT_EMAIL`                         | -                                      | Public support email                             |
+| `NEXT_PUBLIC_INSTANCE_EMAIL_FOOTER_TEXT`            | -                                      | Optional plain-text email footer note            |
+| `NEXT_PUBLIC_SOURCE_CODE_URL`                       | Required in production                 | Corresponding source for the deployed version     |
+| `NEXT_PUBLIC_INSTANCE_DOCUMENTATION_URL`            | -                                      | Instance-owned documentation URL                 |
+| `NEXT_PUBLIC_INSTANCE_SUPPORT_URL`                  | -                                      | Instance-owned support URL                       |
+| `NEXT_PUBLIC_INSTANCE_TERMS_URL`                    | -                                      | Terms of Service URL                             |
+| `NEXT_PUBLIC_INSTANCE_PRIVACY_URL`                  | -                                      | Privacy Policy URL                               |
+| `NEXT_PUBLIC_INSTANCE_PLANS_URL`                    | -                                      | Optional plans/pricing URL                       |
+
+`NEXT_PUBLIC_SOURCE_CODE_URL` must point to the exact modified source deployed by your production
+instance, not only to an unmodified upstream release. The production container exits during startup
+when it is unset.
+
+---
+
 ## Database Configuration
 
 Documenso requires PostgreSQL 14 or higher.
@@ -477,7 +511,7 @@ NEXT_PRIVATE_SMTP_HOST="smtp.example.com"
 NEXT_PRIVATE_SMTP_PORT=587
 NEXT_PRIVATE_SMTP_USERNAME="your-smtp-user"
 NEXT_PRIVATE_SMTP_PASSWORD="your-smtp-password"
-NEXT_PRIVATE_SMTP_FROM_NAME="Documenso"
+NEXT_PRIVATE_SMTP_FROM_NAME="Example Sign"
 NEXT_PRIVATE_SMTP_FROM_ADDRESS="noreply@example.com"
 
 # Signing (certificate must be configured)

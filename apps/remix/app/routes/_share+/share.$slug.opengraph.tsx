@@ -1,4 +1,5 @@
 import { NEXT_PUBLIC_WEBAPP_URL } from '@documenso/lib/constants/app';
+import { getInstanceBranding, resolveInstanceBrandingUrl } from '@documenso/lib/constants/instance-branding';
 import { getRecipientOrSenderByShareLinkSlug } from '@documenso/lib/server-only/document/get-recipient-or-sender-by-share-link-slug';
 import { svgToPng } from '@documenso/lib/utils/images/svg-to-png';
 import satori from 'satori';
@@ -20,6 +21,8 @@ const IMAGE_SIZE = {
 
 export const loader = async ({ params }: Route.LoaderArgs) => {
   const { slug } = params;
+  const branding = getInstanceBranding();
+  const logoUrl = resolveInstanceBrandingUrl(branding.logoUrl, { absolute: true });
 
   // QR codes are not supported for OpenGraph images
   if (slug.startsWith('qr_')) {
@@ -67,18 +70,41 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
         display: 'flex',
         height: '100%',
         width: '100%',
-        backgroundColor: 'white',
+        backgroundColor: '#f8fafc',
         position: 'relative',
       }}
     >
-      <img
-        src={`${baseUrl}/static/og-share-frame2.png`}
-        alt="og-share-frame"
+      <div
         style={{
           position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
+          top: 48,
+          right: 56,
+          display: 'flex',
+          alignItems: 'center',
+          color: '#0f172a',
+          fontFamily: 'Inter',
+          fontSize: 28,
+          fontWeight: 700,
+        }}
+      >
+        {logoUrl ? (
+          <img src={logoUrl} alt={branding.name} style={{ maxWidth: 280, maxHeight: 48, objectFit: 'contain' }} />
+        ) : (
+          branding.name
+        )}
+      </div>
+
+      <div
+        style={{
+          position: 'absolute',
+          top: CARD_OFFSET_TOP,
+          left: CARD_OFFSET_LEFT,
+          width: CARD_WIDTH,
+          height: CARD_HEIGHT,
+          border: `3px solid ${branding.primaryColor}`,
+          borderRadius: 24,
+          backgroundColor: '#ffffff',
+          boxShadow: '0 20px 45px rgba(15, 23, 42, 0.12)',
         }}
       />
 

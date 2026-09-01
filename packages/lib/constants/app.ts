@@ -1,6 +1,7 @@
 import { env } from '@documenso/lib/utils/env';
 import { AppError, AppErrorCode } from '../errors/app-error';
 import { SignatureLevel, type TSignatureLevel } from '../types/signature-level';
+import { getInstanceBranding } from './instance-branding';
 
 export const APP_DOCUMENT_UPLOAD_SIZE_LIMIT = Number(env('NEXT_PUBLIC_DOCUMENT_SIZE_UPLOAD_LIMIT')) || 50;
 
@@ -64,7 +65,7 @@ export const IS_DOCUMENSO_CLOUD = () => env('NEXT_PUBLIC_IS_DOCUMENSO_CLOUD') ==
 export const API_V2_BETA_URL = '/api/v2-beta';
 export const API_V2_URL = '/api/v2';
 
-export const SUPPORT_EMAIL = env('NEXT_PUBLIC_SUPPORT_EMAIL') ?? 'support@documenso.com';
+export const SUPPORT_EMAIL = getInstanceBranding().supportEmail ?? 'support@localhost';
 
 export const USE_INTERNAL_URL_BROWSERLESS = () => env('NEXT_PUBLIC_USE_INTERNAL_URL_BROWSERLESS') === 'true';
 
@@ -143,5 +144,3 @@ export const CSC_INSTANCE_SIGNATURE_LEVEL = (): TSignatureLevel => {
 
   return value;
 };
-
-export const DOCUMENSO_CLOUD_ENTERPRISE_CTA_URL = 'https://documen.so/enterprise-cta';

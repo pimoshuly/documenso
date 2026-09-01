@@ -1,8 +1,6 @@
 // sort-imports-ignore
 import '../konva/skia-backend';
 
-import fs from 'node:fs';
-import path from 'node:path';
 import type { Canvas } from '@documenso/skia-canvas';
 import { Image as SkiaImage } from '@documenso/skia-canvas';
 import type { I18n } from '@lingui/core';
@@ -13,13 +11,14 @@ import Konva from 'konva';
 import { DateTime } from 'luxon';
 import { UAParser } from 'ua-parser-js';
 import { renderSVG } from 'uqr';
-
 import { NEXT_PUBLIC_WEBAPP_URL } from '../../constants/app';
 import { APP_I18N_OPTIONS } from '../../constants/i18n';
+import { getInstanceBranding } from '../../constants/instance-branding';
 import { getSignatureFontFamily } from '../../constants/pdf';
 import { RECIPIENT_ROLE_SIGNING_REASONS, RECIPIENT_ROLES_DESCRIPTION } from '../../constants/recipient-roles';
 import type { TDocumentAuditLogBaseSchema } from '../../types/document-audit-logs';
 import { svgToPng } from '../../utils/images/svg-to-png';
+import { getInstanceBrandingImage } from '../branding/get-instance-branding-image';
 import { ensureFontLibrary } from './helpers';
 
 type ColumnWidths = [number, number, number];
@@ -567,30 +566,18 @@ const renderRow = (options: RenderRowOptions) => {
 
 const renderBranding = async ({ qrToken, i18n }: { qrToken: string | null; i18n: I18n }) => {
   const branding = new Konva.Group();
+  const instanceBranding = getInstanceBranding();
 
   const brandingHeight = 12;
 
   const text = new Konva.Text({
     x: 0,
     verticalAlign: 'middle',
-    text: i18n._(msg`Signing certificate provided by`) + ':',
+    text: `${i18n._(msg`Signing certificate provided by`)}:`,
     fontStyle: fontMedium,
     fontFamily: 'Inter',
     fontSize: textSm,
     height: brandingHeight,
-  });
-
-  const logoPath = path.join(process.cwd(), 'public/static/logo.png');
-  const logo = fs.readFileSync(logoPath);
-
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  const img = new SkiaImage(logo) as unknown as HTMLImageElement;
-
-  const documensoImage = new Konva.Image({
-    image: img,
-    height: brandingHeight,
-    width: brandingHeight * (img.width / img.height),
-    x: text.width() + 16,
   });
 
   const qrSize = qrToken ? 72 : 0;
@@ -599,7 +586,41 @@ const renderBranding = async ({ qrToken, i18n }: { qrToken: string | null; i18n:
     y: qrSize + 16,
   });
   logoGroup.add(text);
-  logoGroup.add(documensoImage);
+
+  const logo = await getInstanceBrandingImage();
+  let hasLogo = false;
+
+  if (logo) {
+    try {
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+      const image = new SkiaImage(logo) as unknown as HTMLImageElement;
+
+      logoGroup.add(
+        new Konva.Image({
+          image,
+          height: brandingHeight,
+          width: brandingHeight * (image.width / image.height),
+          x: text.width() + 16,
+        }),
+      );
+      hasLogo = true;
+    } catch {
+      hasLogo = false;
+    }
+  }
+
+  if (!hasLogo) {
+    logoGroup.add(
+      new Konva.Text({
+        x: text.width() + 16,
+        text: instanceBranding.name,
+        fontFamily: 'Inter',
+        fontSize: textSm,
+        fontStyle: fontMedium,
+        height: brandingHeight,
+      }),
+    );
+  }
 
   branding.add(logoGroup);
 

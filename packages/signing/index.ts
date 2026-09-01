@@ -3,6 +3,7 @@ import {
   NEXT_PUBLIC_SIGNING_CONTACT_INFO,
   NEXT_PUBLIC_WEBAPP_URL,
 } from '@documenso/lib/constants/app';
+import { getInstanceBranding } from '@documenso/lib/constants/instance-branding';
 import { env } from '@documenso/lib/utils/env';
 import type { PDF, Signer } from '@libpdf/core';
 import { match } from 'ts-pattern';
@@ -37,12 +38,13 @@ const getSigner = async () => {
 
 export const signPdf = async ({ pdf }: SignOptions) => {
   const signer = await getSigner();
+  const branding = getInstanceBranding();
 
   const tsa = getTimestampAuthority();
 
   const { bytes } = await pdf.sign({
     signer,
-    reason: 'Signed by Documenso',
+    reason: `Signed by ${branding.name}`,
     location: NEXT_PUBLIC_WEBAPP_URL(),
     contactInfo: NEXT_PUBLIC_SIGNING_CONTACT_INFO(),
     subFilter: NEXT_PRIVATE_USE_LEGACY_SIGNING_SUBFILTER() ? 'adbe.pkcs7.detached' : 'ETSI.CAdES.detached',

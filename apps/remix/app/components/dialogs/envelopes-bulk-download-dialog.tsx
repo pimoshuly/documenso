@@ -5,6 +5,7 @@ import {
 } from '@documenso/lib/client-only/create-zip-writer';
 import { downloadFile } from '@documenso/lib/client-only/download-file';
 import { fetchPDF } from '@documenso/lib/client-only/download-pdf';
+import { getInstanceBranding } from '@documenso/lib/constants/instance-branding';
 import { trpc } from '@documenso/trpc/react';
 import { Alert, AlertDescription } from '@documenso/ui/primitives/alert';
 import { Button } from '@documenso/ui/primitives/button';
@@ -67,6 +68,7 @@ export const EnvelopesBulkDownloadDialog = ({
 }: EnvelopesBulkDownloadDialogProps) => {
   const { t } = useLingui();
   const { toast } = useToast();
+  const instanceBranding = getInstanceBranding();
 
   const [versionMap, setVersionMap] = useState<Record<string, BulkDownloadVersion>>({});
   const [progress, setProgress] = useState(0);
@@ -214,7 +216,7 @@ export const EnvelopesBulkDownloadDialog = ({
 
       try {
         downloadFile({
-          filename: `documenso-documents-${new Date().toISOString().slice(0, 10)}.zip`,
+          filename: `${instanceBranding.downloadFilenamePrefix}-documents-${new Date().toISOString().slice(0, 10)}.zip`,
           data: zipWriter.finalize(),
         });
       } catch (error) {

@@ -1,5 +1,6 @@
 import { authClient } from '@documenso/auth/client';
 import { downloadFile } from '@documenso/lib/client-only/download-file';
+import { getInstanceBranding } from '@documenso/lib/constants/instance-branding';
 import { AppError } from '@documenso/lib/errors/app-error';
 import { Alert, AlertDescription } from '@documenso/ui/primitives/alert';
 import { Button } from '@documenso/ui/primitives/button';
@@ -31,6 +32,7 @@ export const ZViewRecoveryCodesForm = z.object({
 export type TViewRecoveryCodesForm = z.infer<typeof ZViewRecoveryCodesForm>;
 
 export const ViewRecoveryCodesDialog = () => {
+  const instanceBranding = getInstanceBranding();
   const [isOpen, setIsOpen] = useState(false);
 
   const [recoveryCodes, setRecoveryCodes] = useState<string[] | null>(null);
@@ -66,7 +68,7 @@ export const ViewRecoveryCodesDialog = () => {
       });
 
       downloadFile({
-        filename: 'documenso-2FA-recovery-codes.txt',
+        filename: `${instanceBranding.downloadFilenamePrefix}-2FA-recovery-codes.txt`,
         data: blob,
       });
     }

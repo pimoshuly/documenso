@@ -3,6 +3,7 @@
 ###########################
 FROM node:22-alpine3.22 AS base
 
+RUN npm install --global npm@11.11.0
 RUN apk add --no-cache openssl
 RUN apk add --no-cache font-freefont
 
@@ -42,6 +43,7 @@ WORKDIR /app
 ENV HUSKY 0
 ENV DOCKER_OUTPUT 1
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_OPTIONS="--max-old-space-size=3072"
 
 # Encryption keys
 ARG NEXT_PRIVATE_ENCRYPTION_KEY="CAFEBABE"

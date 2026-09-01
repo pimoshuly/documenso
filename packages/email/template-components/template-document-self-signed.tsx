@@ -1,7 +1,8 @@
-import { env } from '@documenso/lib/utils/env';
+import { resolveInstanceBrandingUrl } from '@documenso/lib/constants/instance-branding';
 import { Trans } from '@lingui/react/macro';
 
 import { Button, Column, Img, Link, Section, Text } from '../components';
+import { useBranding } from '../providers/branding';
 import { TemplateDocumentImage } from './template-document-image';
 
 export interface TemplateDocumentSelfSignedProps {
@@ -10,9 +11,9 @@ export interface TemplateDocumentSelfSignedProps {
 }
 
 export const TemplateDocumentSelfSigned = ({ documentName, assetBaseUrl }: TemplateDocumentSelfSignedProps) => {
-  const NEXT_PUBLIC_WEBAPP_URL = env('NEXT_PUBLIC_WEBAPP_URL');
-
-  const signUpUrl = `${NEXT_PUBLIC_WEBAPP_URL ?? 'http://localhost:3000'}/signup`;
+  const branding = useBranding();
+  const signUpUrl = resolveInstanceBrandingUrl('/signup', { absolute: true });
+  const plansUrl = resolveInstanceBrandingUrl(branding.instanceBranding.plansUrl, { absolute: true });
 
   const getAssetUrl = (path: string) => {
     return new URL(path, assetBaseUrl).toString();
@@ -40,36 +41,42 @@ export const TemplateDocumentSelfSigned = ({ documentName, assetBaseUrl }: Templ
           <Trans>You have signed “{documentName}”</Trans>
         </Text>
 
-        <Text className="mx-auto mt-1 mb-6 max-w-[80%] text-center text-base text-muted-foreground">
-          <Trans>
-            Create a{' '}
-            <Link href={signUpUrl} target="_blank" className="whitespace-nowrap text-primary hover:text-primary">
-              free account
-            </Link>{' '}
-            to access your signed documents at any time.
-          </Trans>
-        </Text>
+        {signUpUrl && (
+          <Text className="mx-auto mt-1 mb-6 max-w-[80%] text-center text-base text-muted-foreground">
+            <Trans>
+              Create a{' '}
+              <Link href={signUpUrl} target="_blank" className="whitespace-nowrap text-primary hover:text-primary">
+                free account
+              </Link>{' '}
+              to access your signed documents at any time.
+            </Trans>
+          </Text>
+        )}
 
         <Section className="mt-8 mb-6 text-center">
-          <Button
-            href={signUpUrl}
-            className="mr-4 rounded-lg border border-border border-solid px-4 py-2 text-center font-medium text-foreground text-sm no-underline"
-          >
-            <Img
-              src={getAssetUrl('/static/user-plus.png')}
-              className="mr-2 mb-0.5 inline h-5 w-5 align-middle"
-              alt=""
-            />
-            <Trans>Create account</Trans>
-          </Button>
+          {signUpUrl && (
+            <Button
+              href={signUpUrl}
+              className="mr-4 rounded-lg border border-border border-solid px-4 py-2 text-center font-medium text-foreground text-sm no-underline"
+            >
+              <Img
+                src={getAssetUrl('/static/user-plus.png')}
+                className="mr-2 mb-0.5 inline h-5 w-5 align-middle"
+                alt=""
+              />
+              <Trans>Create account</Trans>
+            </Button>
+          )}
 
-          <Button
-            className="rounded-lg border border-border border-solid px-4 py-2 text-center font-medium text-foreground text-sm no-underline"
-            href="https://documenso.com/pricing"
-          >
-            <Img src={getAssetUrl('/static/review.png')} className="mr-2 mb-0.5 inline h-5 w-5 align-middle" alt="" />
-            <Trans>View plans</Trans>
-          </Button>
+          {plansUrl && (
+            <Button
+              className="rounded-lg border border-border border-solid px-4 py-2 text-center font-medium text-foreground text-sm no-underline"
+              href={plansUrl}
+            >
+              <Img src={getAssetUrl('/static/review.png')} className="mr-2 mb-0.5 inline h-5 w-5 align-middle" alt="" />
+              <Trans>View plans</Trans>
+            </Button>
+          )}
         </Section>
       </Section>
     </>

@@ -1,6 +1,6 @@
-import communityCardsImage from '@documenso/assets/images/community-cards.png';
 import { authClient } from '@documenso/auth/client';
 import { useAnalytics } from '@documenso/lib/client-only/hooks/use-analytics';
+import { getInstanceBranding, resolveInstanceBrandingUrl } from '@documenso/lib/constants/instance-branding';
 import { AppError, AppErrorCode } from '@documenso/lib/errors/app-error';
 import { ZNameSchema } from '@documenso/lib/types/name';
 import { env } from '@documenso/lib/utils/env';
@@ -27,7 +27,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { Link, useNavigate, useSearchParams } from 'react-router';
 import { z } from 'zod';
 
-import { UserProfileTimur } from '~/components/general/user-profile-timur';
+import { UserProfileSkeleton } from '~/components/general/user-profile-skeleton';
 
 export const ZSignUpFormSchema = z
   .object({
@@ -77,6 +77,9 @@ export const SignUpForm = ({
 }: SignUpFormProps) => {
   const { _ } = useLingui();
   const { toast } = useToast();
+  const instanceBranding = getInstanceBranding();
+  const termsUrl = resolveInstanceBrandingUrl(instanceBranding.termsUrl);
+  const privacyUrl = resolveInstanceBrandingUrl(instanceBranding.privacyUrl);
 
   const analytics = useAnalytics();
   const navigate = useNavigate();
@@ -208,24 +211,18 @@ export const SignUpForm = ({
 
   return (
     <div className={cn('flex justify-center gap-x-12', className)}>
-      <div className="relative hidden flex-1 overflow-hidden rounded-xl border border-border xl:flex">
-        <div className="absolute -inset-8 -z-[2] backdrop-blur">
-          <img
-            src={communityCardsImage}
-            alt="community-cards"
-            className="h-full w-full object-cover dark:brightness-95 dark:contrast-[70%] dark:invert"
-          />
-        </div>
-
-        <div className="absolute -inset-8 -z-[1] bg-background/50 backdrop-blur-[2px]" />
-
+      <div className="relative hidden flex-1 overflow-hidden rounded-xl border border-border bg-gradient-to-br from-primary/10 via-background to-muted xl:flex">
         <div className="relative flex h-full w-full flex-col items-center justify-evenly">
           <div className="rounded-2xl border bg-background px-4 py-1 font-medium text-sm">
             <Trans>User profiles are here!</Trans>
           </div>
 
           <div className="w-full max-w-md">
-            <UserProfileTimur rows={2} className="rounded-2xl border border-border bg-background shadow-md" />
+            <UserProfileSkeleton
+              rows={2}
+              user={{ name: 'Example User', url: 'example' }}
+              className="rounded-2xl border border-border bg-background shadow-md"
+            />
           </div>
 
           <div />
@@ -406,27 +403,21 @@ export const SignUpForm = ({
             )}
           </form>
         </Form>
-        <p className="mt-6 text-muted-foreground text-xs">
-          <Trans>
-            By proceeding, you agree to our{' '}
-            <Link
-              to="https://documen.so/terms"
-              target="_blank"
-              className="text-documenso-700 duration-200 hover:opacity-70"
-            >
-              Terms of Service
-            </Link>{' '}
-            and{' '}
-            <Link
-              to="https://documen.so/privacy"
-              target="_blank"
-              className="text-documenso-700 duration-200 hover:opacity-70"
-            >
-              Privacy Policy
-            </Link>
-            .
-          </Trans>
-        </p>
+        {(termsUrl || privacyUrl) && (
+          <p className="mt-6 flex flex-wrap gap-x-1 text-muted-foreground text-xs">
+            <Trans>By proceeding, you agree to the applicable policies:</Trans>
+            {termsUrl && (
+              <Link to={termsUrl} target="_blank" className="text-primary duration-200 hover:opacity-70">
+                <Trans>Terms of Service</Trans>
+              </Link>
+            )}
+            {privacyUrl && (
+              <Link to={privacyUrl} target="_blank" className="text-primary duration-200 hover:opacity-70">
+                <Trans>Privacy Policy</Trans>
+              </Link>
+            )}
+          </p>
+        )}
       </div>
     </div>
   );
